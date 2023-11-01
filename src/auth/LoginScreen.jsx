@@ -9,10 +9,11 @@ const {
     formState: { errors },
     } = useForm({
     defaultValues: {
-        firstName: "",
-        lastName: "",
+        email: "",
+        password: "",
     },
     })
+
     const onSubmit = (data) => console.log(data)
 
     return (
@@ -24,15 +25,18 @@ const {
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              placeholder="First name"
+              style={styles.input}
+              placeholder="Email"
+              keyboardType="email-address"
+              autoCapitalize="none"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
             />
           )}
-          name="firstName"
+          name="email"
         />
-        {errors.firstName && <Text>This is required.</Text>}
+        {errors.email && <Text style={styles.errorText}>This is required.</Text>}
   
         <Controller
           control={control}
@@ -41,13 +45,15 @@ const {
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              placeholder="Last name"
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
             />
           )}
-          name="lastName"
+          name="password"
         />
   
         <Button title="Submit" onPress={handleSubmit(onSubmit)} />
@@ -58,8 +64,18 @@ const {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    padding: 16,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingLeft: 8,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 16,
   },
 });

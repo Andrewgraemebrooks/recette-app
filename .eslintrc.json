@@ -1,0 +1,25 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "airbnb/hooks",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-use-before-define": "off",
+        "react/jsx-filename-extension": "off",
+        "import/no-extraneous-dependencies": "off"
+    },
+    "plugins": [
+        "react",
+        "react-native"
+    ]
+}

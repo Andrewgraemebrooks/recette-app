@@ -1,17 +1,15 @@
 import { create } from 'zustand';
-import log from 'loglevel';
 import axios from '../axios/axios'
 
 const useAuthStore = create((set) => ({
   token: '',
   register: async (data) => {
-    try {
-        const response = await axios.post('/api/mobile/register', data)
-        log.debug(response)
-        set({ token: response.data })
-      } catch (error) {
-        log.debug(error);
-    }
+    const response = await axios.post('/api/mobile/register', data)
+    set({ token: response.data })
+  },
+  login: async (data) => {
+    const response = await axios.post('/api/mobile/login', data)
+    set({ token: response.data })
   },
 }))
 

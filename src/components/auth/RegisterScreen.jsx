@@ -2,9 +2,11 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import log from 'loglevel';
+import PropTypes from 'prop-types';
 import useAuthStore from '../../store/auth';
 
-export default function RegisterScreen() {
+export default function RegisterScreen(props) {
+  const { navigation } = props; 
   const {
     control,
     handleSubmit,
@@ -22,7 +24,14 @@ export default function RegisterScreen() {
 
   log.debug(useAuthStore(state => state.token))
 
-  const onSubmit = (data) => register({...data, 'device_name': 'test device'});
+  const onSubmit = async (data) => {
+    try {
+      await register({...data, 'device_name': 'test device'});
+      navigation.navigate('Home');
+    } catch (error) {
+      log.error(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -106,6 +115,12 @@ export default function RegisterScreen() {
     </View>
   );
 }
+
+RegisterScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {

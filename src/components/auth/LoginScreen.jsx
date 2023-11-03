@@ -2,8 +2,11 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import log from 'loglevel';
+import PropTypes from 'prop-types';
+import useAuthStore from '../../store/auth';
 
-export default function LoginScreen() {
+export default function LoginScreen(props) {
+  const { navigation } = props;
   const {
     control,
     handleSubmit,
@@ -15,10 +18,26 @@ export default function LoginScreen() {
     },
   });
 
-  const onSubmit = (data) => log.debug(data);
+  const login = useAuthStore((state) => state.login);
+  const token = useAuthStore((state) => state.token);
+
+  const onSubmit = async (data) => {
+    try {
+      await login({ ...data, device_name: 'test device' });
+      log.debug(token);
+      navigation.navigate('Home');
+    } catch (error) {
+      log.error(error);
+    }
+  };
+
+  const handleRegister = () => {
+    navigation.navigate('Register');
+  };
 
   return (
     <View style={styles.container}>
+      {errors.email && <Text style={styles.errorText}>Email is required</Text>}
       <Controller
         control={control}
         rules={{
@@ -33,12 +52,12 @@ export default function LoginScreen() {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            autoCorrect={false}
           />
         )}
         name="email"
       />
-      {errors.email && <Text style={styles.errorText}>This is required.</Text>}
-
+      {errors.password && <Text style={styles.errorText}>Email is required</Text>}
       <Controller
         control={control}
         rules={{
@@ -58,9 +77,17 @@ export default function LoginScreen() {
       />
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+
+      <Button title="Register" onPress={handleRegister} />
     </View>
   );
 }
+
+LoginScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {

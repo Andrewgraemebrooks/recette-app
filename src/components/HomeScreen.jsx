@@ -1,17 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import useRecipeStore from '../store/recipes';
 
 export default function HomeScreen() {
   const recipes = useRecipeStore((state) => state.recipes);
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
+
   React.useEffect(() => {
     fetchRecipes();
   }, [fetchRecipes]);
-  console.log(recipes)
+
+  const renderItem = ({ item }) => (
+    <View style={styles.item}>
+      <Text>{item.name}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text style={styles.header}>My Recipes</Text>
+      <FlatList
+        data={recipes}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 }
@@ -19,8 +31,17 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 16,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 8,
   },
 });

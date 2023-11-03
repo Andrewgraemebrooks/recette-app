@@ -14,8 +14,8 @@ export default function LoginScreen(props) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'andrewgraemebrooks@gmail.com',
+      password: 'password',
     },
   });
 

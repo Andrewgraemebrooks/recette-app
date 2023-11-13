@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Recette",
-    "slug": "Recette",
+    "slug": "recette-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +15,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.andrewgraemebrooks.recetteapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +29,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9d5f13c8-8dc9-4515-9f29-296ff3dce854"
+      }
+    },
+    "owner": "andrewgraemebrooks"
   }
 }

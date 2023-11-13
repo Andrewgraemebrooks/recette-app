@@ -1,6 +1,6 @@
 import axios from "axios";
 import _ from 'lodash';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 
 const instance = axios.create({
     baseURL: process.env.EXPO_PUBLIC_BASE_URL,
@@ -8,7 +8,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(async (config) => {
     const configClone = _.cloneDeep(config);
-    const token = await AsyncStorage.getItem('token')
+    const token = await SecureStore.getItemAsync('token');
     if (token) {
         configClone.headers = {
             ...configClone.headers,

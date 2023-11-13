@@ -1,8 +1,10 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 import useRecipeStore from '../store/recipes';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+  const { navigation } = props;
   const recipes = useRecipeStore((state) => state.recipes);
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
 
@@ -11,9 +13,19 @@ export default function HomeScreen() {
   }, [fetchRecipes]);
 
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text>{item.name}</Text>
-    </View>
+    <Pressable
+      style={({ pressed }) => [
+        styles.itemContainer,
+        {
+          backgroundColor: pressed ? '#f0f0f0' : '#f9c2ff',
+        },
+      ]}
+      onPress={() => navigation.navigate('RecipeDetails', { recipe: item })}
+    >
+      {({ pressed }) => (
+        <Text style={[styles.title, { opacity: pressed ? 0.5 : 1 }]}>{item.name}</Text>
+      )}
+    </Pressable>
   );
 
   return (
@@ -27,6 +39,10 @@ export default function HomeScreen() {
     </View>
   );
 }
+
+HomeScreen.propTypes = {
+  navigation: PropTypes.object.isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {

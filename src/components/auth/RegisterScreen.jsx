@@ -118,9 +118,7 @@ export default function RegisterScreen(props) {
 }
 
 RegisterScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
+  navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

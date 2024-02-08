@@ -35,6 +35,9 @@
         "projectId": "9d5f13c8-8dc9-4515-9f29-296ff3dce854"
       }
     },
-    "owner": "andrewgraemebrooks"
+    "owner": "andrewgraemebrooks",
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }
